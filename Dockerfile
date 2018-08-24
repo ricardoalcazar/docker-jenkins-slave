@@ -51,7 +51,6 @@ WORKDIR $ANDROID_HOME
 RUN wget ${SDK}
 RUN unzip ./sdk-tools-linux-4333796.zip
 RUN echo y | ./tools/bin/sdkmanager "build-tools;27.0.3" && \
-	echo y | ./tools/bin/sdkmanager "platforms;android-26" && \
 	echo y | ./tools/bin/sdkmanager "platforms;android-27"
 RUN rm sdk-tools-linux-4333796.zip
 RUN chown -R ${user}:${group} $ANDROID_HOME
