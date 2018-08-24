@@ -29,10 +29,16 @@ ARG gid=1000
 # ANDROID SDK
 ARG SDK=https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
 
+# GRADLE
+ARG GRADLE=https://services.gradle.org/distributions/gradle-3.4.1-bin.zip
+
 # Environment
 ENV JENKINS_HOME /home/${user}
 ENV ANDROID_HOME $JENKINS_HOME/android_home
 ENV JAVA_HOME /etc/alternatives/java_sdk
+ENV GRADLE_HOME /opt/gradle
+ENV PATH "${PATH}:/opt/gradle/gradle-3.4.1/bin"
+
 
 # Jenkins is run with user "jenkins", uid=1000
 RUN groupadd -g ${gid} ${group}
@@ -54,5 +60,13 @@ RUN echo y | ./tools/bin/sdkmanager "build-tools;27.0.3" && \
 	echo y | ./tools/bin/sdkmanager "platforms;android-27"
 RUN rm sdk-tools-linux-4333796.zip
 RUN chown -R ${user}:${group} $ANDROID_HOME
+
+# Create Gradle dir
+RUN mkdir $GRADLE_HOME
+WORKDIR $GRADLE_HOME
+RUN wget ${GRADLE}
+RUN unzip gradle-3.4.1-bin.zip
+RUN rm gradle-3.4.1-bin.zip
+
 WORKDIR $JENKINS_HOME
 
