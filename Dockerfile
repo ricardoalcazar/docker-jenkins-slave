@@ -4,21 +4,20 @@
 #
 ##
 
-FROM centos:7
+FROM ubuntu:18.04
 LABEL maintainer="ricardo.d.alcazar@gmail.com"
 
 # Update packages
-RUN yum update -y && \
-	yum clean all
+RUN apt-get update -y && \
+    apt-get upgrade -y
 
 # Install packages
-RUN yum install -y git && \
-	yum install -y wget && \
-	yum install -y java-1.8.0-openjdk && \
-	yum install -y sudo && \
-	yum install -y maven && \
-	yum install -y unzip && \
-	yum clean all
+RUN apt-get install -y git && \
+    apt-get install -y wget && \
+	apt-get install -y openjdk-8-jdk && \
+	apt-get install -y sudo && \
+	apt-get install -y maven && \
+	apt-get install -y unzip
 
 # Setup user
 ARG user=jenkins
@@ -35,7 +34,7 @@ ARG GRADLE=https://services.gradle.org/distributions/gradle-3.4.1-bin.zip
 # Environment
 ENV JENKINS_HOME /home/${user}
 ENV ANDROID_HOME $JENKINS_HOME/android_home
-ENV JAVA_HOME /etc/alternatives/java_sdk
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV GRADLE_HOME /opt/gradle
 ENV PATH "${PATH}:/opt/gradle/gradle-3.4.1/bin"
 
