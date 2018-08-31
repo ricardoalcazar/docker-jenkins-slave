@@ -13,7 +13,7 @@ RUN yum update -y && \
 
 # Install packages
 RUN yum install -y wget && \
-	yum install -y java-1.8.0-openjdk && \
+	yum install -y java-1.8.0-openjdk-devel && \
 	yum install -y python && \
 	yum install -y sudo && \
 	yum install -y unzip && \
@@ -35,7 +35,7 @@ ARG SDK=https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
 # Environment
 ENV JENKINS_HOME /home/${user}
 ENV ANDROID_HOME $JENKINS_HOME/android_home
-ENV JAVA_HOME /usr/lib/jvm/jre-openjdk
+ENV JAVA_HOME /usr/lib/jvm/java-openjdk
 RUN env
 
 # Jenkins is run with user "jenkins", uid=1000
